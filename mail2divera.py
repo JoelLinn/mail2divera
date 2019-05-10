@@ -14,7 +14,7 @@ def parse_message(msg):
     info['objekt']                  = split[3]
     info['einsatzort_bemerkung']    = split[4]
     info['stichwort']               = split[5]
-    info['diagnose']                = split[6]
+    info['meldebild']               = split[6]
     info['bemerkung']               = split[7]
     info['zugeteilt']               = split[8]
     return info
@@ -23,11 +23,11 @@ def build_alarm(info):
     alarm = ''
     alarm += info['stichwort'] + ','
     alarm += info['objekt'] + ','
-    alarm += info['gemeindeteil'] + ','
+    alarm += info['meldebild'] + ','
     alarm += info['strasse_hnr'] + ','
+    alarm += info['gemeindeteil'] + ','
     alarm += info['einsatzort_bemerkung'] + ','
-    alarm += info['bemerkung'] + ','
-    alarm += info['diagnose']
+    alarm += info['bemerkung']
     return alarm
 
 def trigger_divera(msg, DIVERA_ACCESSKEY):
