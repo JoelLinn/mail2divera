@@ -15,4 +15,6 @@ ENV MAIL_MAX_AGE 600
 ENV FETCH_INTERVAL 1
 ENV DIVERA_ACCESSKEY ""
 
+USER www-data
+
 CMD [ "python", "./mail2divera.py" ]
