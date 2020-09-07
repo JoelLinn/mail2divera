@@ -20,21 +20,21 @@ def parse_message(msg):
     return info
 
 def build_alarm(info):
-    alarm = ''
-    alarm += info['stichwort'] + ','
-    alarm += info['objekt'] + ','
-    alarm += info['meldebild'] + ','
-    alarm += info['strasse_hnr'] + ','
-    alarm += info['gemeindeteil'] + ','
-    alarm += info['einsatzort_bemerkung'] + ','
-    alarm += info['bemerkung']
-    return alarm
+    alarm = [
+        info['stichwort'].replace(' ', ''),
+        info['objekt'],
+        info['meldebild'],
+        info['strasse_hnr'],
+        info['gemeindeteil'],
+        info['einsatzort_bemerkung'],
+        info['bemerkung']
+    ]
+    return '|'.join(filter(None, alarm))
 
 def trigger_divera(msg, DIVERA_ACCESSKEY):
     post = {'type':msg}
     r = requests.post(url=DIVERA_URL+DIVERA_ACCESSKEY, data=post).json()
     return r
-        
 
 def run(logger, IMAP_SERVER, IMAP_USER, IMAP_PASS, MAIL_FROM, MAIL_MAX_AGE, FETCH_INTERVAL, DIVERA_ACCESSKEY):
 
@@ -67,7 +67,7 @@ def run(logger, IMAP_SERVER, IMAP_USER, IMAP_PASS, MAIL_FROM, MAIL_MAX_AGE, FETC
                 break
         time.sleep(FETCH_INTERVAL)
     M.logout()
-    
+
 if __name__ == "__main__":
     logging.basicConfig(
         format='%(asctime)s - %(levelname)s: %(message)s',
